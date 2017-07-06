@@ -58,6 +58,7 @@ class BuildTest(unittest.TestCase):
         # Set destination
         fake_zip = "fake_zip_{}.zip".format(self.build.timestamp())
         dest_folder = os.path.join(self.EXAMPLE_PROJECT, self.DIST_FOLDER)
+        self.build.mkdir(dest_folder)
         fake_dest_file = os.path.join(dest_folder, fake_zip)
 
         # Run
