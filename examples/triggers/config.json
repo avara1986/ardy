@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "aws_credentials":{
+    "region": "eu-west-1"
+  },
+  "deploy": {
+    "deploy_method": "S3",
+    "deploy_bucket": "lambdartefacts2",
+    "version_control": "",
+    "deploy_file": "",
+    "use_alias": false
+  },
+  "Role": "[ADD_YOUR_AWS_ROLE_HERE]",
+  "MemorySize": 512,
+  "Runtime": "python3.6",
+  "Timeout": 30,
+  "Publish": true,
+  "Tags": {
+    "environment": "example"
+  },
+  "Environment": {
+    "Variables": {
+      "DEBUG": "False"
+    }
+  },
+  "lambdas": [
+    {
+      "FunctionName": "LambdaExample1",
+      "Handler": "myexamplelambdaproject.lambda1.main.my_handler",
+      "Description": "Example deploy for AWS lambda LambdaExample1",
+      "MemorySize": 256,
+      "Tags": {
+        "environment": "example1"
+      },
+      "triggers": {
+        "s3": [
+          {
+            "Id": "trigger_from_LambdaExample1",
+            "bucket_name": "lambdatriggers2",
+            "Events": [
+              "s3:ObjectCreated:*"
+            ],
+            "Filter": {
+              "Key": {
+                "FilterRules": [
+                  {
+                    "Name": "Prefix",
+                    "Value": "test_"
+                  },
+                  {
+                    "Name": "Suffix",
+                    "Value": ""
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "sns": [
+          {
+            "TopicArn": "arn:aws:sns:eu-west-1:016081714405:TestLambdas"
+          }
+        ],
+        "cloudwatchevent": [
+          {
+            "Name": "Raise1minute",
+            "ScheduleExpression": "cron(* * * * ? *)",
+            "State": "DISABLED",
+            "Description": "Run every 1 minute"
+          }
+        ]
+      }
+    },
+    {
+      "FunctionName": "LambdaExample2",
+      "Handler": "myexamplelambdaproject.lambda2.main.my_handler",
+      "Description": "Example deploy for AWS lambda LambdaExample2",
+      "Tags": {
+        "environment": "example2"
+      },
+      "triggers": {
+
+        "sns": [
+          {
+            "TopicArn": "arn:aws:sns:eu-west-1:016081714405:TestLambdas"
+          }
+        ]
+      }
+    }
+  ]
+}

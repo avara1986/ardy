@@ -1,0 +1,5 @@
+[run]
+include=*ardy/*
+omit =
+    *examples/*
+    .tox/*

@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "aws_credentials":{
+    "region": "eu-west-1"
+  },
+  "deploy": {
+    "deploy_method": "S3",
+    "deploy_bucket": "lambdartefacts",
+    "version_control": "",
+    "deploy_file": "",
+    "deploy_environments": [
+      "dev",
+      "pre",
+      "pro"
+    ],
+    "use_alias": true
+  },
+  "Role": "[ADD_YOUR_AWS_ROLE_HERE]",
+  "MemorySize": 512,
+  "Runtime": "python3.6",
+  "Timeout": 30,
+  "Publish": true,
+  "Tags": {
+    "environment": "example"
+  },
+  "Environment": {
+    "Variables": {
+      "DEBUG": "False"
+    }
+  },
+  "lambdas": [
+    {
+      "FunctionName": "LambdaExample1",
+      "Handler": "myexamplelambdaproject.lambda1.main.my_handler",
+      "Description": "Example deploy for AWS lambda LambdaExample1",
+      "MemorySize": 256,
+      "Tags": {
+        "environment": "example1"
+      },
+      "deploy_environments": {
+        "dev": {"Description": "AWS lambda LambdaExample1 DEV environment"},
+        "pre": {"Description": "AWS lambda LambdaExample1 PRE environment"},
+        "pro": {"Description": "AWS lambda LambdaExample1 PRO environment"}
+      }
+    },
+    {
+      "FunctionName": "LambdaExample2",
+      "Handler": "myexamplelambdaproject.lambda2.main.my_handler",
+      "Description": "Example deploy for AWS lambda LambdaExample2",
+      "Tags": {
+        "environment": "example2"
+      }
+    }
+  ]
+}

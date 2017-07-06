@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "aws_credentials": {
+    "region": "eu-west-1"
+  },
+  "deploy": {
+    "deploy_method": "FILE",
+    "deploy_environments": [
+      "dev",
+      "pre",
+      "pro"
+    ]
+  },
+  "Role": "[ADD_YOUR_AWS_ROLE_HERE]",
+  "Runtime": "python3.6",
+  "lambdas": [
+    {
+      "FunctionName": "LambdaExample1",
+      "Handler": "myexamplelambdaproject.lambda1.main.my_handler",
+      "deploy_environments": {
+        "dev": {
+          "FunctionName": "LambdaExample1_dev"
+        },
+        "pre": {
+          "FunctionName": "LambdaExample1_pre"
+        },
+        "pro": {
+          "FunctionName": "LambdaExample1_pro"
+        }
+      }
+    }
+  ]
+}
