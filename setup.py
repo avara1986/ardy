@@ -22,7 +22,7 @@ setup(
     description="AWS Lambda toolkit",
     long_description=long_description,
     classifiers=[
-        "Development Status :: 1 - Alpha",
+        "Development Status :: 4 - Beta",
         "Environment :: Console",
         "Intended Audience :: Developers",
         "Intended Audience :: System Administrators",
