@@ -2,13 +2,11 @@
 # python imports
 from __future__ import unicode_literals, print_function
 
+import json
 from abc import ABCMeta, abstractmethod
 
-import json
-from ardy.config import ConfigMixin
-from ardy.utils.aws import AWSCli
 from ardy.core.triggers.exceptions import ArdyNoTriggerConfError
-from ardy.core.exceptions import ArdyNotImplementError
+from ardy.utils.aws import AWSCli
 
 
 class Trigger(object):
@@ -47,11 +45,11 @@ class Trigger(object):
         conf.update({self._LAMBDA_ARN_KEY: self.lambda_function_arn})
         return conf
 
-    @abstractmethod
+
     def set_client(self):
         return self.set_aws_class()
 
-    @abstractmethod
+
     def set_aws_class(self, *args, **kwargs):
         return getattr(AWSCli(config=self.lambda_conf), self.get_awsservice_method)()
 

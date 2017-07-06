@@ -1,20 +1,26 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2017 by Alberto Vara <a.vara.1986@gmail.com>
+import codecs
 import os
+
 from setuptools import setup, find_packages
 
+version = __import__('ardy').__version__
+author = __import__('ardy').__author__
+author_email = __import__('ardy').__email__
 
-def read(file):
-    return open(os.path.join(os.path.dirname(__file__), file))
-
+if os.path.exists('README.rst'):
+    long_description = codecs.open('README.rst', 'r', 'utf-8').read()
+else:
+    long_description = 'See https://github.com/avara1986/ardy'
 
 setup(
     name="Ardy",
-    version="0.0.1",
-    author="Alberto Vara",
-    author_email="a.vara.1986@gmail.com",
+    version=version,
+    author=author,
+    author_email=author_email,
     description="AWS Lambda toolkit",
-    long_description=(read('README.rst').read() + '\n\n' + read('CHANGES.rst').read()),
+    long_description=long_description,
     classifiers=[
         "Development Status :: 1 - Alpha",
         "Environment :: Console",

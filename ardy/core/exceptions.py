@@ -26,5 +26,6 @@ class ArdyAwsError(Exception):
 class ArdyNoArtefactError(Exception):
     pass
 
+
 class ArdyNotImplementError(Exception):
     pass

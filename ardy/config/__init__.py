@@ -135,7 +135,7 @@ class GlobalConfig(BaseConfig):
 
 
 class LambdaConfig(BaseConfig):
-    _DEPLOY_KEYS_BLACKLIST = ["path", "version", "filename","aws_credentials", "deploy", "triggers",
+    _DEPLOY_KEYS_BLACKLIST = ["path", "version", "filename", "aws_credentials", "deploy", "triggers",
                               "deploy_environments", "requirements", "environment", "lambdas_to_deploy"]
 
     def __init__(self, *args, **kwargs):
@@ -153,6 +153,7 @@ class LambdaConfig(BaseConfig):
 
     def get_deploy_conf(self):
         return {k: v for k, v in self.items() if k not in self._DEPLOY_KEYS_BLACKLIST}
+
     def merge_dicts(self, x, y):
         """
         if sys.version_info >= (3,5):

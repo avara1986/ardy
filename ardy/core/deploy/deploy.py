@@ -8,9 +8,10 @@ from botocore.exceptions import ClientError
 
 from ardy.config import ConfigMixin
 from ardy.core.build import Build
+from ardy.core.triggers import get_trigger
 from ardy.utils.aws import AWSCli
 from ardy.utils.log import logger
-from ardy.core.triggers import get_trigger
+
 
 class Deploy(ConfigMixin):
     build = None
