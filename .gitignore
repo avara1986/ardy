@@ -10,6 +10,7 @@ static/*
 !/.travis.yml
 .directory
 src
+test.zip
 # C extensions
 *.so
 .idea
