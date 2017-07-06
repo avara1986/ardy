@@ -11,10 +11,12 @@ Ardy (Arthur Hendy)
   :target: https://coveralls.io/github/avara1986/ardy?branch=master
 
 .. image:: https://readthedocs.org/projects/ardy/badge/?version=latest
-  :target: http://avython.readthedocs.io/en/latest/?badge=latest
+    :target: http://ardy.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
 
 .. image:: https://requires.io/github/avara1986/ardy/requirements.svg?branch=master
-  :target: https://requires.io/github/avara1986/ardy/requirements/?branch=master
+     :target: https://requires.io/github/avara1986/ardy/requirements/?branch=master
+     :alt: Requirements Status
 
 
 Ardy is a toolkit to work with AWS Lambas and implement Continuous Integration.
