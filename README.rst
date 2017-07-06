@@ -1,8 +1,8 @@
 Ardy (Arthur Hendy)
 ===================
 
-.. image:: https://badge.fury.io/py/ardy.svg
-    :target: https://badge.fury.io/py/ardy
+.. image:: https://badge.fury.io/py/Ardy.svg
+    :target: https://badge.fury.io/py/Ardy
 
 .. image:: https://travis-ci.org/avara1986/ardy.svg?branch=master
     :target: https://travis-ci.org/avara1986/ardy
