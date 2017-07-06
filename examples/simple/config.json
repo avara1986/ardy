@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "aws_credentials":{
+    "region": "eu-west-1"
+  },
+  "deploy": {
+    "deploy_method": "FILE"
+  },
+  "Role": "[ADD_YOUR_AWS_ROLE_HERE]",
+  "Runtime": "python3.6",
+  "lambdas": [
+    {
+      "FunctionName": "LambdaExample3",
+      "Handler": "myexamplelambdaproject.lambda1.main.my_handler"
+    },
+    {
+      "FunctionName": "LambdaExample4",
+      "Handler": "myexamplelambdaproject.lambda2.main.my_handler"
+    }
+  ]
+}

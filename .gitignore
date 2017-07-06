@@ -1,0 +1,52 @@
+#PROJECT
+# Byte-compiled / optimized / DLL files
+__pycache__/
+.DS_Store
+*.py[cod]
+*.swp
+static/*
+!/.gitignore
+!/.gitmodules
+!/.travis.yml
+.directory
+src
+# C extensions
+*.so
+.idea
+.pypirc
+/build/
+# Distribution / packaging
+.Python
+env/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+*.egg-info/
+.installed.cfg
+*.egg
+*~
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/

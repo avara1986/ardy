@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "aws_credentials":{
+    "region": "eu-west-1"
+  },
+  "deploy": {
+    "deploy_method": "S3",
+    "deploy_bucket": "lambdartefacts",
+    "deploy_environments": [
+      "dev",
+      "pre",
+      "pro"
+    ],
+    "use_alias": false
+  },
+  "VpcConfig": {
+    "SubnetIds": [
+      "subnet-123",
+      "subnet-456"
+    ],
+    "SecurityGroupIds": [
+      "sg-789"
+    ]
+  },
+  "Role": "example_role",
+  "MemorySize": 512,
+  "Runtime": "python3.6",
+  "Timeout": 30,
+  "Publish": true,
+  "Tags": {
+    "environment": "example"
+  },
+  "Environment": {
+    "Variables": {
+      "DEBUG": "False"
+    }
+  },
+  "lambdas": [
+    {
+      "FunctionName": "LambdaExample_S3_7",
+      "Handler": "myexamplelambdaproject.lambda1.main.my_handler",
+      "Description": "string1",
+      "triggers": {
+        "s3": [
+          {
+            "Id": "trigger_from_LambdaExample_S3_7",
+            "bucket_name": "lambdatriggers",
+            "Events": [
+              "s3:ObjectCreated:*"
+            ],
+            "Filter": {
+              "Key": {
+                "FilterRules": [
+                  {
+                    "Name": "Prefix",
+                    "Value": "test_"
+                  },
+                  {
+                    "Name": "Suffix",
+                    "Value": ""
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "FunctionName": "LambdaExample_SNS_8",
+      "Handler": "myexamplelambdaproject.lambda2.main.my_handler",
+      "Description": "LambdaExample_SNS_8",
+      "triggers": {
+        "sns": [
+          {
+            "TopicArn": "arn:aws:sns:eu-west-1:123456789012:TestLambdas"
+          }
+        ]
+      }
+    },
+    {
+      "FunctionName": "LambdaExample_CWE_9",
+      "Handler": "myexamplelambdaproject.lambda2.main.my_handler",
+      "Description": "string2",
+      "triggers": {
+        "cloudwatchevent": [
+          {
+            "Name": "Raise1minute",
+            "ScheduleExpression": "cron(* * * * ? *)",
+            "State": "DISABLED",
+            "Description": "Run every 1 minute"
+          }
+        ]
+      }
+    }
+  ]
+}
