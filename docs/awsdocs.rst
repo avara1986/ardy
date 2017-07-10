@@ -1,7 +1,7 @@
 Code Examples
 =============
 
-To start working with AWS lambda I recommend you read this pages or do some lab:
+To start working with AWS Lambda I recommend reading these pages or doing some labs:
 
 
 Documentation
