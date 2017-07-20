@@ -39,7 +39,7 @@ class CmdTest(unittest.TestCase):
         test_folder = "myexamplelambdaproject_test"
         try:
             arguments = ["-p", test_folder, "-f", "config.json"]
-            Command(arguments=arguments)
+            Command(arguments=arguments, exit_at_finish=False)
             self.fail("notexist folder not exists")
         except ArdyNoDirError:
             pass
@@ -48,7 +48,7 @@ class CmdTest(unittest.TestCase):
 
         try:
             arguments = ["-p", test_folder, "-f", "config.json"]
-            Command(arguments=arguments)
+            Command(arguments=arguments, exit_at_finish=False)
             self.fail("config.json not exist in myexamplelambdaproject")
         except ArdyNoFileError:
             pass
@@ -57,16 +57,15 @@ class CmdTest(unittest.TestCase):
 
         if sys.version_info <= (3, 0):
             with self.assertRaises(SystemExit):
-                Command(arguments=self.base_arguments)
+                Command(arguments=self.base_arguments, exit_at_finish=False)
         else:
-            with self.assertRaises(SystemExit):
-                command = Command(arguments=self.base_arguments)
-                self.assert_base_conf(command)
+            command = Command(arguments=self.base_arguments, exit_at_finish=False)
+            self.assert_base_conf(command)
 
     def test_deploy_error(self):
         lambda_functions_to_deploy = ["lambda1", "lambda2"]
         with self.assertRaises(SystemExit):
-            Command(arguments=self.base_arguments + ["deploy", ] + lambda_functions_to_deploy)
+            Command(arguments=self.base_arguments + ["deploy", ] + lambda_functions_to_deploy, exit_at_finish=False)
             self.fail("Environment is needed is it's defined in config.json")
 
     @patch.object(Deploy, "run")
@@ -74,7 +73,7 @@ class CmdTest(unittest.TestCase):
         lambda_functions_to_deploy = ["lambda1", "lambda2"]
         for environment in self.deploy_environments:
             arguments = self.base_arguments + ["deploy", ] + lambda_functions_to_deploy + [environment, ]
-            deploy = Command(arguments=arguments)
+            deploy = Command(arguments=arguments, exit_at_finish=False)
             self.assertEqual(deploy.args.lambdafunctions, lambda_functions_to_deploy)
             self.assertEqual(deploy.args.environment, environment)
 
@@ -84,7 +83,7 @@ class CmdTest(unittest.TestCase):
     @patch.object(Build, "run")
     def test_build(self, build_run_mock):
         arguments = self.base_arguments + ["build", ]
-        build = Command(arguments=arguments)
+        build = Command(arguments=arguments, exit_at_finish=False)
         self.assertEqual(build_run_mock.call_count, 1)
         self.assert_base_conf(build)
 

@@ -19,6 +19,7 @@ class Command(object):
 
     def __init__(self, *args, **kwargs):
         arguments = kwargs.get("arguments", False)
+        self.exit_at_finish = kwargs.get("exit_at_finish", True)
         if not arguments:
             arguments = sys.argv[1:]
 
@@ -106,11 +107,13 @@ class Command(object):
 
     def exit_with_error(self, msg=""):
         self.print_error(msg)
-        sys.exit(2)
+        if self.exit_at_finish:
+            sys.exit(2)
 
     def exit_ok(self, msg=""):
         self.print_ok(msg)
-        sys.exit(0)
+        if self.exit_at_finish:
+            sys.exit(0)
 
     @staticmethod
     def print_ok(msg=""):
