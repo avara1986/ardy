@@ -106,7 +106,7 @@ class Build(ConfigMixin):
     def get_src_path(self):
         return self.src_path
 
-    def run(self, src_folder, requirements=False, local_package=None):
+    def run(self, src_folder, requirements="requirements.txt", local_package=None):
         """Builds the file bundle.
         :param str src:
            The path to your Lambda ready project (folder must contain a valid
@@ -189,13 +189,12 @@ class Build(ConfigMixin):
             pass
         else:
             requirements_path = os.path.join(self.get_src_path(), requirements)
-            logger.debug('Gathering requirement packages {}'.format(requirements_path))
-            if os.path.exists(requirements_path):
+            logger.debug('Gathering packages from requirements: {}'.format(requirements_path))
+            if os.path.isfile(requirements_path):
                 data = self.read(requirements_path)
                 packages.extend(data.splitlines())
-
-        if not packages:
-            logger.debug('No dependency packages installed!')
+            else:
+                logger.debug('No requirements file in {}'.format(requirements_path))
 
         if local_package is not None:
             if not isinstance(local_package, (list, tuple)):
