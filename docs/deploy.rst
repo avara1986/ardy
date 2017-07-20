@@ -1,7 +1,7 @@
 Deploy
 ======
 
-To deploy your project, you can create a script or as a command in a shell (See :doc:`more details about the command line </commandline>`)
+To deploy your project, you can create a script or add a command in a shell (See :doc:`more details about the command line </commandline>`)
 
 
 .. code-block:: python

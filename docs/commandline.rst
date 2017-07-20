@@ -13,7 +13,7 @@ optional arguments:
 
 Commands:
   - *deploy:* Upload functions to AWS Lambda
-  - *invoke:* Invoke a functions from AWS Lambda
+  - *invoke:* Invoke functions from AWS Lambda
   - *build:* Create an artefact
 
 If you want to deploy *all your AWS Lambdas* defined in your *config.json* file
@@ -22,15 +22,13 @@ If you want to deploy *all your AWS Lambdas* defined in your *config.json* file
 
    ardy deploy
 
-Or if you want to deploy a specific list of function, you can deploy the AWS Lambdas with:
+Or if you want to deploy a specific list of functions, you can deploy the AWS Lambdas with:
 
 .. code-block:: bash
 
    ardy deploy MyLambda MyOtherLambda
 
-You can deploy only a environment:
-
-Or if you want to deploy a specific list of function, you can deploy the AWS Lambdas with:
+You can deploy only an environment:
 
 .. code-block:: bash
 

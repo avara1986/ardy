@@ -1,9 +1,9 @@
 Quickstart
 ==========
 
-After start to work with `Ardy` or AWS Lambda, if you don't know anything about AWS Lambda  I recommend you the :doc:`AWS documentation </awsdocs>`.
+Before start working with Ardy or AWS Lambda, if you don’t know anything about AWS Lambda I recommend you the :doc:`AWS documentation </awsdocs>`.
 
-Suppose you have a project whith multiple lambas with the following structure:
+Suppose you have a project with multiple lambas with the following structure:
 
 .. code-block:: bash
 
@@ -69,10 +69,10 @@ If you want to deploy your AWS Lambdas, you just must run this command in a shel
 
    ardy deploy
 
-Or if you want to deploy a specific list of function, you can deploy the AWS Lambdas with:
+Or if you want to deploy a specific list of functions, you can deploy the AWS Lambdas with:
 
 .. code-block:: bash
 
    ardy deploy MyLambda MyOtherLambda
 
-See :doc:`more details about deploy </deploy>`
+See :doc:`more details about how to deploy </deploy>`
