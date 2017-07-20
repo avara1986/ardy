@@ -59,8 +59,9 @@ class CmdTest(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 Command(arguments=self.base_arguments)
         else:
-            command = Command(arguments=self.base_arguments)
-            self.assert_base_conf(command)
+            with self.assertRaises(SystemExit):
+                command = Command(arguments=self.base_arguments)
+                self.assert_base_conf(command)
 
     def test_deploy_error(self):
         lambda_functions_to_deploy = ["lambda1", "lambda2"]
