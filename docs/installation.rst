@@ -23,6 +23,7 @@ If this is your first time configuring credentials for AWS you can follow these 
 
 
 .. code-block:: bash
+
    $ mkdir ~/.aws
    $ cat >> ~/.aws/credentials
    [default]
