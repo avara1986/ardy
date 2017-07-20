@@ -8,7 +8,7 @@ import sys
 from ardy.config import GlobalConfig
 from ardy.core.build import Build
 from ardy.core.deploy import Deploy
-
+from ardy.utils.log import logger
 
 class Command(object):
     config = None
@@ -45,7 +45,14 @@ class Command(object):
                                            help='Create an artefact and Upload to S3 if S3 is configured (See config)')
         parser_build.add_argument("-r", "--requirements", help="Path and filename of the python project")
         self.args = self.parser.parse_args(arguments)
-        self.parse_commandline()
+        try:
+            result = self.parse_commandline()
+            if result:
+                self.exit_ok("OK")
+        except Exception as e:
+            logger.error(e)
+
+        self.exit_with_error("ERROR")
 
     @property
     def parser_base(self):
@@ -74,7 +81,7 @@ class Command(object):
     def parse_commandline(self):
         params = {}
         run_params = {}
-
+        result = False
         if self.args.command_name == "deploy":
             if self.args.lambdafunctions and self.args.lambdafunctions is not "_ALL_":
                 params["lambdas_to_deploy"] = self.args.lambdafunctions
@@ -84,7 +91,7 @@ class Command(object):
                 run_params["path_to_zip_file"] = self.args.zipfile
 
             deploy = Deploy(config=self.config, **params)
-            deploy.run(**run_params)
+            result = deploy.run(**run_params)
 
         elif self.args.command_name == "invoke":
             pass
@@ -92,9 +99,26 @@ class Command(object):
             if getattr(self.args, "requirements", False):
                 run_params["requirements"] = self.args.requirements
             build = Build(config=self.config)
-            build.run(**params)
+            result = build.run(**params)
         else:
             self.parser.print_help()
+        return result
+
+    def exit_with_error(self, msg=""):
+        self.print_error(msg)
+        sys.exit(2)
+
+    def exit_ok(self, msg=""):
+        self.print_ok(msg)
+        sys.exit(0)
+
+    @staticmethod
+    def print_ok(msg=""):
+        print('\033[92m\033[1m ' + msg + ' \033[0m\033[0m')
+
+    @staticmethod
+    def print_error(msg=""):
+        print('\033[91m\033[1m ' + msg + ' \033[0m\033[0m')
 
 
 if __name__ == '__main__':

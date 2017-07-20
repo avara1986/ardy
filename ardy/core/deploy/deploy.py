@@ -130,8 +130,6 @@ class Deploy(ConfigMixin):
             code = {'S3Bucket': deploy_bucket, 'S3Key': s3_keyfile, }
 
         elif deploy_method == "FILE":
-            print("DEPLOY FILE:")
-            print(self.config["deploy"]["deploy_file"])
             code = {'ZipFile': self.build.read(self.config["deploy"]["deploy_file"])}
         else:
             raise Exception("No deploy_method in config")

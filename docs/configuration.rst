@@ -47,11 +47,10 @@ You can set the same keys as in Global Configuration, and it will be overridden.
 
 * **lambdas:** [REQUIRED] List of dictionaries. You can define the key value pair defined below for each AWS Lambda you want to deploy.
     * **FunctionName:** [REQUIRED] String. The name you want to assign to the function you are uploading
-    * **Handler:** [REQUIRED] String. The function within your code that Lambda calls to begin execution
+    * **Handler:** [REQUIRED] String. The function within your code that Lambda calls to start the execution
     * **Description:** A short, user-defined function description
-    * **deploy_environments:** If `use_alias` is False, You can set the same keys as in Global Configuration and Lambda configuration, and it will be overridden.
-      If `use_alias` is True, one AWS Lambda is deployed and `Ardy` create an alias pinted to the Lambda Version. :doc:`more details about the alias </configuration.alias>`.
-   * **triggers:** :doc:`more details about events and triggers </configuration.triggers>`.
+    * **deploy_environments:** If `use_alias` is False, You can set the same keys as in Global Configuration and Lambda configuration, and it will be overridden. If use_alias is True, one AWS Lambda is deployed and Ardy create an alias pointed to the Lambda Version. Learn :doc:`more details about the alias </configuration.alias>`.
+    * **triggers:** :doc:`more details about events and triggers </configuration.triggers>`.
 
 .. tip::
     `Learn more about Versions and Alias here <http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html>`_
