@@ -109,7 +109,6 @@ class DeployTest(DeployBaseTest):
         response = client.create_topic(
             Name='TestLambdas'
         )
-        print(response)
 
         self.deploy = Deploy(path=os.path.dirname(os.path.abspath(__file__)), filename="config_with_triggers.json",
                              lambdas_to_deploy=["LambdaExample_SNS_8", ])
