@@ -5,6 +5,8 @@ from __future__ import unicode_literals, print_function
 import json
 from abc import ABCMeta, abstractmethod
 
+from botocore.exceptions import ClientError
+
 from ardy.core.triggers.exceptions import ArdyNoTriggerConfError
 from ardy.utils.aws import AWSCli
 
@@ -45,10 +47,8 @@ class Trigger(object):
         conf.update({self._LAMBDA_ARN_KEY: self.lambda_function_arn})
         return conf
 
-
     def set_client(self):
         return self.set_aws_class()
-
 
     def set_aws_class(self, *args, **kwargs):
         return getattr(AWSCli(config=self.lambda_conf), self.get_awsservice_method)()
@@ -58,7 +58,15 @@ class Trigger(object):
         return getattr(self.client, self.awsservice_put_method)(*args, **kwargs)
 
     def lambda_exist_policy(self, function_name, StatementId):
-        response = self.awslambda.get_policy(FunctionName=function_name)
+        try:
+            response = self.awslambda.get_policy(FunctionName=function_name)
+        except ClientError as e:
+            if e.response['Error']['Code'] == "ResourceNotFoundException":
+                return False
+            else:
+                # TODO: handle other errors there
+                return False
+
         policies = json.loads(response["Policy"])
         for policy in policies["Statement"]:
             if policy["Sid"] == StatementId:
