@@ -30,6 +30,9 @@ class Deploy(ConfigMixin):
         self.config = kwargs.get("config", False)
         if not self.config:
             super(Deploy, self).__init__(*args, **kwargs)
+        # If run deploy from command line, config is setted before environment requested by argparser. Need to reset
+        # Environment
+        self.config.set_environment(kwargs.get("environment"))
         lambdas_to_deploy = kwargs.get("lambdas_to_deploy", [])
         if type(lambdas_to_deploy) is not list:
             lambdas_to_deploy = [lambdas_to_deploy, ]
@@ -166,9 +169,9 @@ class Deploy(ConfigMixin):
                         result = self.remote_publish_version(**conf)
                         self.remote_update_alias(**{
                             "FunctionName": conf["FunctionName"],
-                            "Description": conf.get("Description", ""),
+                            "Description": conf["Description"],
                             "FunctionVersion": result["Version"],
-                            "Name": self.config.get("environment", "default"),
+                            "Name": self.config.get_environment(),
 
                         })
                     logger.info("Updating Triggers for fuction {}".format(lambda_funcion["FunctionName"]))

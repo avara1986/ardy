@@ -35,6 +35,7 @@ class BaseConfig(dict):
         return '%s(%s)' % (type(self).__name__, dictrepr)
 
     def set_environment(self, environment=False):
+        logger.debug("Setting environment {}".format(environment))
         self.environment = environment
 
     def get_environment(self):
