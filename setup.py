@@ -46,7 +46,7 @@ setup(
         ]
     },
     install_requires=[
-        "boto3>=1.4.4"
+        "boto3>=1.6.16"
     ],
     zip_safe=True,
 )
