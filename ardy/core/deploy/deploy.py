@@ -166,9 +166,9 @@ class Deploy(ConfigMixin):
                         result = self.remote_publish_version(**conf)
                         self.remote_update_alias(**{
                             "FunctionName": conf["FunctionName"],
-                            "Description": conf["Description"],
+                            "Description": conf.get("Description", ""),
                             "FunctionVersion": result["Version"],
-                            "Name": self.config["environment"],
+                            "Name": self.config.get("environment", "default"),
 
                         })
                     logger.info("Updating Triggers for fuction {}".format(lambda_funcion["FunctionName"]))
