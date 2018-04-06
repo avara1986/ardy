@@ -161,7 +161,8 @@ class Build(ConfigMixin):
         filtered_packages = filter(_filter_blacklist, packages)
         # print([package for package in filtered_packages])
         for package in filtered_packages:
-            if package.startswith(b'-e '):
+            package = str(package, "utf-8")
+            if package.startswith('-e '):
                 package = package.replace('-e ', '')
 
             logger.info('Installing {package}'.format(package=package))
