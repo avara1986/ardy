@@ -44,7 +44,7 @@ class Trigger(object):
     def get_deploy_conf(self, trigger_conf):
         # TODO: Refactor like conf and lambda conf?
         conf = {k: v for k, v in trigger_conf.items() if k in self._DEPLOY_KEYS_WHITELIST}
-        conf.update({self._LAMBDA_ARN_KEY: self.lambda_function_arn})
+
         return conf
 
     def set_client(self):
