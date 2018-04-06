@@ -137,13 +137,15 @@ class GlobalConfig(BaseConfig):
 
 class LambdaConfig(BaseConfig):
     _DEPLOY_KEYS_BLACKLIST = ["path", "version", "filename", "aws_credentials", "deploy", "triggers",
-                              "deploy_environments", "requirements", "environment", "lambdas_to_deploy"]
+                              "deploy_environments", "requirements", "environment", "lambdas_to_deploy",
+                              "FunctionNameOrigin"]
 
     def __init__(self, *args, **kwargs):
         super(LambdaConfig, self).__init__(*args, **kwargs)
         self.set_environment(kwargs.get("environment", False))
         self._set_conf_from_dict(args[0], args[1])
         environment_config = args[0].get("deploy_environments", {})
+        self["FunctionNameOrigin"] = self["FunctionName"]
         if self.get_environment() and environment_config:
             self._set_conf_from_dict(environment_config[self.get_environment()], self)
 
