@@ -2,6 +2,8 @@
 # python imports
 from __future__ import unicode_literals, print_function
 
+import json
+
 from ardy.core.triggers.driver import Trigger
 from ardy.utils.log import logger
 
@@ -18,8 +20,10 @@ class Driver(Trigger):
     def put(self, *args, **kwargs):
         triggers_conf = self.get_triggers()
         for trigger_conf in triggers_conf:
-            logger.info("START to deploy CloudWatch Event triggers for rule {}".format(trigger_conf['Name']))
-
+            rule_conf = self.get_deploy_conf(trigger_conf)
+            logger.info("START to deploy CloudWatch Event triggers for rule {} with conf: {}".format(
+                trigger_conf['Name'], json.dumps(rule_conf, indent=4, sort_keys=True))
+            )
             self.client.put_rule(**self.get_deploy_conf(trigger_conf))
 
             StatementId = "{}-{}".format(self.lambda_conf["FunctionName"], trigger_conf['Name'])
@@ -31,13 +35,15 @@ class Driver(Trigger):
                     StatementId=StatementId
                 )
 
+            target_conf = {
+                'Id': self.lambda_conf["FunctionName"],
+                'Arn': self.lambda_function_arn,
+                'Input': trigger_conf.get("Input", ""),
+            }
+            logger.info("Put target CloudWatch {} with conf: {}".format(trigger_conf['Name'],
+                                                                        json.dumps(target_conf, indent=4,
+                                                                                   sort_keys=True)))
             self.client.put_targets(
                 Rule=trigger_conf['Name'],
-                Targets=[
-                    {
-                        'Id': self.lambda_conf["FunctionName"],
-                        'Arn': self.lambda_function_arn,
-                        'Input': trigger_conf.get("Input", ""),
-                    },
-                ]
+                Targets=[target_conf, ]
             )
