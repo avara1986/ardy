@@ -30,6 +30,8 @@ class Driver(Trigger):
                     Principal='s3.amazonaws.com',
                     StatementId=StatementId
                 )
+            conf = self.get_deploy_conf(trigger_conf)
+            conf.update({self._LAMBDA_ARN_KEY: self.lambda_function_arn})
             bucket_notification.put(
-                NotificationConfiguration={'LambdaFunctionConfigurations': [self.get_deploy_conf(trigger_conf), ]}
+                NotificationConfiguration={'LambdaFunctionConfigurations': [conf, ]}
             )
