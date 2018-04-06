@@ -20,7 +20,7 @@ class Driver(Trigger):
         for trigger_conf in triggers_conf:
             logger.info("START to deploy CloudWatch Event triggers for rule {}".format(trigger_conf['Name']))
 
-            self.client.put_rule(**trigger_conf)
+            self.client.put_rule(**self.get_deploy_conf(trigger_conf))
 
             StatementId = "{}-{}".format(self.lambda_conf["FunctionName"], trigger_conf['Name'])
             if not self.lambda_exist_policy(self.lambda_conf["FunctionName"], StatementId):
@@ -37,6 +37,7 @@ class Driver(Trigger):
                     {
                         'Id': self.lambda_conf["FunctionName"],
                         'Arn': self.lambda_function_arn,
+                        'Input': trigger_conf.get("Input", ""),
                     },
                 ]
             )
