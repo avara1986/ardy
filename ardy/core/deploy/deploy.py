@@ -140,9 +140,13 @@ class Deploy(ConfigMixin):
         return code
 
     def deploy(self):
+        lambdas_deployed = []
         for lambda_funcion in self.config.get_lambdas():
-            start_deploy = not len(self.lambdas_to_deploy) or lambda_funcion["FunctionName"] in self.lambdas_to_deploy
+            start_deploy = not len(self.lambdas_to_deploy) or \
+                           lambda_funcion["FunctionNameOrigin"] in self.lambdas_to_deploy
+
             if start_deploy:
+                lambdas_deployed.append(lambda_funcion["FunctionName"])
                 conf = lambda_funcion.get_deploy_conf()
                 response = self.remote_get_lambda(**conf)
                 if response:
@@ -165,21 +169,34 @@ class Deploy(ConfigMixin):
                     result = self.remote_create_lambada(**conf)
 
                 if result['ResponseMetadata']['HTTPStatusCode'] in (201, 200):
-                    if self.config["deploy"].get("use_alias", False):
+
+                    version = "LATEST"
+                    if self.config["deploy"].get("use_version", False):
+                        logger.info("Publish new version of {}".format(lambda_funcion["FunctionName"]))
                         result = self.remote_publish_version(**conf)
+                        version = result["Version"]
+                        logger.info("Published version {} OK".format(version))
+                    if self.config["deploy"].get("use_alias", False):
+                        logger.info("Update alias of {}".format(lambda_funcion["FunctionName"]))
                         self.remote_update_alias(**{
                             "FunctionName": conf["FunctionName"],
                             "Description": conf["Description"],
-                            "FunctionVersion": result["Version"],
+                            "FunctionVersion": version,
                             "Name": self.config.get_environment(),
 
                         })
+                        logger.info("Updated alias {} OK".format(conf["FunctionName"]))
                     logger.info("Updating Triggers for fuction {}".format(lambda_funcion["FunctionName"]))
                     if lambda_funcion.get("triggers", False):
 
                         for trigger in lambda_funcion["triggers"].keys():
                             trigger_object = get_trigger(trigger, lambda_funcion, result["FunctionArn"])
                             trigger_object.put()
+
+        if lambdas_deployed:
+            logger.info("Deploy finished. Created/updated lambdas {}".format(", ".join(lambdas_deployed)))
+        else:
+            logger.info("No lambdas found to deploy")
 
     def remote_get_lambda(self, **kwargs):
         response = False
