@@ -4,11 +4,13 @@ from __future__ import unicode_literals, print_function
 
 import argparse
 import sys
+import traceback
 
 from ardy.config import GlobalConfig
 from ardy.core.build import Build
 from ardy.core.deploy import Deploy
 from ardy.utils.log import logger
+
 
 class Command(object):
     config = None
@@ -51,7 +53,8 @@ class Command(object):
             if result:
                 self.exit_ok("OK")
         except Exception as e:
-            logger.error(e)
+            # traceback = sys.exc_info()[2]
+            logger.error(traceback.format_exc())
 
         self.exit_with_error("ERROR")
 
