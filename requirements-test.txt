@@ -1,6 +1,6 @@
  -r requirements.txt # includes the base requirements file
 coveralls==1.3.0
-moto==1.1.0
+https://github.com/avara1986/moto/archive/fix/lambda_backend.zip
 nose==1.3.7
-tox==2.9.1
+tox==3.0.0
 mock==2.0.0
