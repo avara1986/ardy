@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "aws_credentials":{
+    "region": "eu-west-1"
+  },
+  "deploy": {
+    "deploy_method": "S3",
+    "deploy_bucket": "lambdartefacts",
+    "deploy_environments": [
+      "dev",
+      "pre",
+      "pro"
+    ],
+    "use_alias": true,
+    "use_version": true
+  },
+  "Role": "example_role",
+  "MemorySize": 512,
+  "Runtime": "python3.6",
+  "Timeout": 30,
+  "Publish": true,
+  "Tags": {
+    "environment": "example"
+  },
+  "Environment": {
+    "Variables": {
+      "DEBUG": "False"
+    }
+  },
+  "lambdas": [
+    {
+      "FunctionName": "LambdaExample4",
+      "Handler": "myexamplelambdaproject.lambda1.main.my_handler",
+      "Description": "string1",
+      "deploy_environments": {
+        "dev": {},
+        "pre": {},
+        "pro": {}
+      }
+    },
+    {
+      "FunctionName": "LambdaExample5",
+      "Handler": "myexamplelambdaproject.lambda2.main.my_handler",
+      "Description": "string2",
+      "Role": "example_role2",
+      "deploy_environments": {
+        "dev": {},
+        "pre": {},
+        "pro": {}
+      }
+    },
+    {
+      "FunctionName": "LambdaExample6d",
+      "Handler": "myexamplelambdaproject.main.my_handler",
+      "Description": "string3",
+      "Role": "example_role3",
+      "deploy_environments": {
+        "dev": {},
+        "pre": {},
+        "pro": {}
+      }
+    }
+  ]
+}
