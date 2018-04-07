@@ -171,10 +171,12 @@ class Deploy(ConfigMixin):
                     logger.info("START to update funcion {}".format(conf["FunctionName"]))
                     self.remote_update_conf_lambada(**conf)
                     result = self.remote_update_code_lambada(**conf)
+                    logger.debug("Funcion {} updated {}".format(conf["FunctionName"], result))
 
                 else:
                     logger.info("START to create funcion {}".format(lambda_funcion["FunctionName"]))
                     result = self.remote_create_lambada(**conf)
+                    logger.debug("Funcion {} created {}".format(conf["FunctionName"], result))
 
                 if result['ResponseMetadata']['HTTPStatusCode'] in (201, 200):
 
@@ -198,10 +200,12 @@ class Deploy(ConfigMixin):
                         }
                         if self.config.get_environment():
                             alias_conf.update({"Name": self.config.get_environment()})
+                        else:
+                            alias_conf.update({"Name": conf["FunctionName"]})
 
                         logger.info("Update alias of {} with conf {}".format(
                             lambda_funcion["FunctionName"],
-                            json.dumps(conf, indent=4, sort_keys=True)
+                            json.dumps(alias_conf, indent=4, sort_keys=True)
                         ))
                         self.remote_update_alias(**alias_conf)
                         logger.info("Updated alias {} OK".format(conf["FunctionName"]))
@@ -262,7 +266,7 @@ class Deploy(ConfigMixin):
         return response
 
     def remote_publish_version(self, **kwargs):
-        conf = {k: v for k, v in kwargs.items() if k in ["FunctionName"]}
+        conf = {k: v for k, v in kwargs.items() if k in ["FunctionName", "Description"]}
         response = self.awslambda.publish_version(**conf)
 
         return response
