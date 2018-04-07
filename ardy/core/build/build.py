@@ -1,6 +1,6 @@
 # coding=utf-8
-# python imports
 from __future__ import unicode_literals, print_function
+from builtins import str
 
 import datetime
 import os
