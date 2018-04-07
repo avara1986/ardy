@@ -178,7 +178,7 @@ class Deploy(ConfigMixin):
                     result = self.remote_create_lambada(**conf)
                     logger.debug("Funcion {} created {}".format(conf["FunctionName"], result))
 
-                if result['ResponseMetadata']['HTTPStatusCode'] in (201, 200):
+                if self.is_client_result_ok(result):
 
                     # Check and publish version
                     version = "LATEST"
@@ -189,7 +189,10 @@ class Deploy(ConfigMixin):
                         ))
                         result = self.remote_publish_version(**conf)
                         version = result["Version"]
-                        logger.info("Published version {} OK".format(version))
+                        logger.info("Published version {}: {}".format(
+                            version,
+                            json.dumps(result, indent=4, sort_keys=True)
+                        ))
 
                     # Check and publish alias
                     if self.config["deploy"].get("use_alias", False):
@@ -207,8 +210,10 @@ class Deploy(ConfigMixin):
                             lambda_funcion["FunctionName"],
                             json.dumps(alias_conf, indent=4, sort_keys=True)
                         ))
-                        self.remote_update_alias(**alias_conf)
-                        logger.info("Updated alias {} OK".format(conf["FunctionName"]))
+                        result = self.remote_update_alias(**alias_conf)
+                        logger.info("Updated alias {}: {}".format(conf["FunctionName"],
+                                                                  json.dumps(result, indent=4, sort_keys=True)
+                                                                  ))
 
                     # Check and publish triggers
                     logger.info("Updating Triggers for fuction {}".format(lambda_funcion["FunctionName"]))
@@ -224,6 +229,10 @@ class Deploy(ConfigMixin):
 
         # TODO: check errors to return correct value
         return True
+
+    @staticmethod
+    def is_client_result_ok(result):
+        return result['ResponseMetadata']['HTTPStatusCode'] in (201, 200)
 
     def remote_get_lambda(self, **kwargs):
         response = False

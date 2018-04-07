@@ -1,10 +1,10 @@
 # coding=utf-8
 from __future__ import unicode_literals, print_function
-from builtins import str
 
 import datetime
 import os
 import zipfile
+from builtins import str
 from shutil import copy2
 from tempfile import mkdtemp
 
