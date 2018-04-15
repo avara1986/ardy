@@ -173,7 +173,7 @@ class Build(ConfigMixin):
         copy (re-install) them to the path provided.
         :param str path:
             Path to copy installed pip packages to.
-        :param bool requirements:
+        :param str requirements:
             If set, only the packages in the requirements.txt file are installed.
             The requirements.txt file needs to be in the same directory as the
             project which shall be deployed.
