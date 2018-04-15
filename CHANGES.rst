@@ -1,7 +1,7 @@
 Releases
 ========
 
-0.0.5 (2018-04-XX)
+0.0.5 (2018-04-15)
 ------------------
 * Fix unicode error reading requirements
 * New parameter in global configuration file: use_version
