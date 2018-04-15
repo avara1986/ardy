@@ -1,10 +1,10 @@
 # coding=utf-8
-# python imports
 from __future__ import unicode_literals, print_function
 
 import datetime
 import os
 import zipfile
+from builtins import str
 from shutil import copy2
 from tempfile import mkdtemp
 
@@ -161,7 +161,8 @@ class Build(ConfigMixin):
         filtered_packages = filter(_filter_blacklist, packages)
         # print([package for package in filtered_packages])
         for package in filtered_packages:
-            if package.startswith(b'-e '):
+            package = str(package, "utf-8")
+            if package.startswith('-e '):
                 package = package.replace('-e ', '')
 
             logger.info('Installing {package}'.format(package=package))
@@ -172,7 +173,7 @@ class Build(ConfigMixin):
         copy (re-install) them to the path provided.
         :param str path:
             Path to copy installed pip packages to.
-        :param bool requirements:
+        :param str requirements:
             If set, only the packages in the requirements.txt file are installed.
             The requirements.txt file needs to be in the same directory as the
             project which shall be deployed.
