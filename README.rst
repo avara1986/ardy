@@ -2,22 +2,29 @@ Ardy (Arthur Hendy)
 ===================
 
 .. image:: https://badge.fury.io/py/Ardy.svg
-    :target: https://badge.fury.io/py/Ardy
-.. image:: https://img.shields.io/pypi/dm/:package.svg
-    :alt: PyPI - Downloads
+    :target: https://pypi.org/project/Ardy/
+
+.. image:: https://img.shields.io/pypi/dm/ardy.svg
+    :target: https://pypi.org/project/Ardy/
+
 .. image:: https://travis-ci.org/avara1986/ardy.svg?branch=master
     :target: https://travis-ci.org/avara1986/ardy
+
 .. image:: https://coveralls.io/repos/github/avara1986/ardy/badge.svg?branch=master
   :target: https://coveralls.io/github/avara1986/ardy?branch=master
+
 .. image:: https://readthedocs.org/projects/ardy/badge/?version=latest
     :target: http://ardy.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
+
 .. image:: https://requires.io/github/avara1986/ardy/requirements.svg?branch=master
      :target: https://requires.io/github/avara1986/ardy/requirements/?branch=master
      :alt: Requirements Status
+
 .. image:: https://pyup.io/repos/github/avara1986/ardy/shield.svg
      :target: https://pyup.io/repos/github/avara1986/ardy/
      :alt: Updates
+
 .. image:: https://pyup.io/repos/github/avara1986/ardy/python-3-shield.svg
      :target: https://pyup.io/repos/github/avara1986/ardy/
      :alt: Python 3
