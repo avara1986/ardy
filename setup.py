@@ -14,6 +14,10 @@ if os.path.exists('README.rst'):
 else:
     long_description = 'See https://github.com/avara1986/ardy'
 
+# parse_requirements() returns generator of pip.req.InstallRequirement objects
+with open('requirements.txt') as f:
+    required = [lib for lib in f.read().splitlines() if not lib.startswith("-e")]
+
 setup(
     name="Ardy",
     version=version,
@@ -22,7 +26,7 @@ setup(
     description="AWS Lambda toolkit",
     long_description=long_description,
     classifiers=[
-        "Development Status :: 4 - Beta",
+        'Development Status :: 6 - Mature',
         "Environment :: Console",
         "Intended Audience :: Developers",
         "Intended Audience :: System Administrators",
@@ -45,9 +49,6 @@ setup(
             'ardy = ardy.core.cmd.main:Command'
         ]
     },
-    install_requires=[
-        "boto3>=1.7.2",
-        "future==0.16.0"
-    ],
+    install_requires=required,
     zip_safe=True,
 )
